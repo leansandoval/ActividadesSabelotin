@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "axios": "^1.12.2",
+    "dotenv": "^17.2.2",
+    "expo-speech": "~14.0.7",
+    "express": "^5.1.0",
+    "fluent-ffmpeg": "^2.1.3",
+    "multer": "^2.0.2"
+  }
+}
