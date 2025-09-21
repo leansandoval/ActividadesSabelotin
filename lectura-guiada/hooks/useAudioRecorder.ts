@@ -8,7 +8,7 @@ const GRABANDO = true;
 const NO_CARGANDO = false;
 const NO_GRABANDO = false;
 
-export function useAudioRecorder() {
+export function useAudioRecorder(endpointBackend?: string) {
     const [audioUri, setAudioUri] = useState<string | null>(null);
     const [cargando, setCargando] = useState(NO_CARGANDO);
     const [grabacion, setGrabacion] = useState<Recording | null>(null);
@@ -18,6 +18,12 @@ export function useAudioRecorder() {
     async function comenzarGrabacion() {
         try {
             setCargando(CARGANDO);
+            const servidorDisponible = await verificarServidorDisponible();
+            if (!servidorDisponible) {
+                setCargando(NO_CARGANDO);
+                alert('El servidor no está disponible. Verifica tu conexión.');
+                return;
+            }
             const permiso = await Audio.requestPermissionsAsync();
             if (permiso.status !== ESTADO_PERMISO_OTORGADO) {
                 setCargando(NO_CARGANDO);
@@ -85,6 +91,27 @@ export function useAudioRecorder() {
         setGrabacion(null);
         setSonido(null);
     }
+
+    async function verificarServidorDisponible(): Promise<boolean> {
+        if (!endpointBackend) {
+            return true; // Si no hay endpoint, asumimos que está disponible
+        }
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 segundos para verificación
+
+            const response = await fetch(endpointBackend.replace('/audio', '/health'), {
+                method: 'GET',
+                signal: controller.signal,
+            });
+
+            clearTimeout(timeoutId);
+            return response.ok;
+        } catch {
+            return false;
+        }
+    }
+
 
     return { audioUri, grabando, cargando, comenzarGrabacion, detenerGrabacion, limpiarGrabacion };
 }

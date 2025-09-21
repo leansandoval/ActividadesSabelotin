@@ -35,6 +35,7 @@ export function LecturaGuiadaActividadView({
   colorTexto = '#FFFFFF',
   colorBoton = '#000000',
   colorFondoCaja = '#797575ff',
+  errorConexion,
 }: any) {
   const snackbarAnim = useState(new Animated.Value(0))[0];
   const enProcesoDeGrabacion = enviando || grabando || cargando;
@@ -59,6 +60,22 @@ export function LecturaGuiadaActividadView({
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       style={{ flex: 1 }}>
+
+      {/* Mostrar error de conexión si existe */}
+      {errorConexion && (
+        <View style={{
+          backgroundColor: '#FFEBEE',
+          borderLeftWidth: 4,
+          borderLeftColor: '#F44336',
+          marginHorizontal: 16,
+          marginTop: 16,
+          padding: 12,
+        }}>
+          <ThemedText style={{ color: '#F44336', textAlign: 'center', fontSize: 16 }}>
+            ⚠️ Problemas de conexión con el servidor
+          </ThemedText>
+        </View>
+      )}
 
       {/* Popup de Grabación */}
       <Modal

@@ -128,3 +128,7 @@ app.listen(PUERTO, () => {
     console.log(`Servidor escuchando en puerto ${PUERTO}`);
     console.log(`Token de Wit.ai: ${WIT_TOKEN}`);
 });
+
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok', message: 'Servidor funcionando correctamente' });
+});

@@ -17,11 +17,11 @@ const ORACIONES = [
   { texto: 'Voy al parque con mis amigos' },
 ];
 const TIPO_DE_AUDIO_GRABACION_EXPO = 'audio/x-m4a';
-const { IP_PC, PUERTO } = Constants.expoConfig?.extra || {};
+const { IP_PC, IP_ANDROID_STUDIO, PUERTO } = Constants.expoConfig?.extra || {};
 
 export default function LecturaGuiadaOracion() {
+  const [errorConexion, setErrorConexion] = useState(false);
   const [mostrarPopup, setMostrarPopup] = useState(false);
-
   const {
     elementoActual,
     grabando,
@@ -30,7 +30,7 @@ export default function LecturaGuiadaOracion() {
     comenzarGrabacion,
     detenerGrabacion,
     enviarAudioAlBackend,
-    siguiente,
+    siguienteElemento,
     snackbar,
     setSnackbar,
     audioUri,
@@ -40,7 +40,8 @@ export default function LecturaGuiadaOracion() {
     endpointBackend: `http://${IP_PC}:${PUERTO}/audio`,
     compararTexto: (reconocido, esperado) =>
       reconocido.replace(/[.,;:!?¿¡"]/g, '').trim().toLowerCase() ===
-      esperado.replace(/[.,;:!?¿¡"]/g, '').trim().toLowerCase()
+      esperado.replace(/[.,;:!?¿¡"]/g, '').trim().toLowerCase(),
+    onErrorConexion: setErrorConexion,
   });
 
   const listoParaGrabar = !enviando && !grabando && !cargando && !audioUri;
@@ -73,7 +74,7 @@ export default function LecturaGuiadaOracion() {
       comenzarGrabacion={handleComenzarGrabacion}
       detenerGrabacion={handleDetenerGrabacion}
       enviarAudioAlBackend={enviarAudioAlBackend}
-      siguiente={siguiente}
+      siguienteElemento={siguienteElemento}
       snackbar={snackbar}
       setSnackbar={setSnackbar}
       reproducirAudio={reproducirAudio}
