@@ -24,7 +24,7 @@ export function LecturaGuiadaActividadView({
   comenzarGrabacion,
   detenerGrabacion,
   enviarAudioAlBackend,
-  siguiente,
+  siguienteElemento,
   snackbar,
   setSnackbar,
   reproducirAudio,
@@ -211,7 +211,7 @@ export function LecturaGuiadaActividadView({
             <Pressable
               accessibilityLabel="Siguiente"
               disabled={enProcesoDeGrabacion}
-              onPress={siguiente}
+              onPress={siguienteElemento}
               style={[
                 styles.botonAudio,
                 enProcesoDeGrabacion && styles.botonDeshabilitado,

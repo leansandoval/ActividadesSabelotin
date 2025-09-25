@@ -1,22 +1,27 @@
-/*import { useLecturaGuiadaActividad } from '../hooks/useLecturaGuiadaActividad';
-import { LecturaGuiadaActividadView } from '../components/LecturaGuiadaActividadView';
+/*import { useLecturaGuiadaActividad } from '../../hooks/useLecturaGuiadaActividad';
+import { LecturaGuiadaActividadView } from '../../components/LecturaGuiadaActividadView';
 import * as Speech from 'expo-speech';
 import Constants from 'expo-constants';
 import React, { useState } from 'react';
 
-const LETRAS = [
-  { texto: 'A' }, { texto: 'B' }, { texto: 'C' }, { texto: 'D' }, { texto: 'E' }, { texto: 'F' },
-  { texto: 'G' }, { texto: 'H' }, { texto: 'I' }, { texto: 'J' }, { texto: 'K' }, { texto: 'L' },
-  { texto: 'M' }, { texto: 'N' }, { texto: 'O' }, { texto: 'P' }, { texto: 'Q' }, { texto: 'R' },
-  { texto: 'S' }, { texto: 'T' }, { texto: 'U' }, { texto: 'V' }, { texto: 'W' }, { texto: 'X' },
-  { texto: 'Y' }, { texto: 'Z' },
+const ORACIONES = [
+  { texto: 'El perro duerme' },
+  { texto: 'La luna brilla en el cielo' },
+  { texto: 'Me gusta leer libros' },
+  { texto: 'La flor es roja' },
+  { texto: 'Hoy hace mucho calor' },
+  { texto: 'El gato juega con la pelota' },
+  { texto: 'La casa es grande' },
+  { texto: 'El sol sale por la mañana' },
+  { texto: 'La maestra escribe en el pizarrón' },
+  { texto: 'Voy al parque con mis amigos' },
 ];
 const TIPO_DE_AUDIO_GRABACION_EXPO = 'audio/x-m4a';
-const { IP_PC, PUERTO } = Constants.expoConfig?.extra || {};
+const { IP_PC, IP_ANDROID_STUDIO, PUERTO } = Constants.expoConfig?.extra || {};
 
-export default function LecturaGuiadaLetra() {
+export default function LecturaGuiadaOracion() {
+  const [errorConexion, setErrorConexion] = useState(false);
   const [mostrarPopup, setMostrarPopup] = useState(false);
-
   const {
     elementoActual,
     grabando,
@@ -25,21 +30,24 @@ export default function LecturaGuiadaLetra() {
     comenzarGrabacion,
     detenerGrabacion,
     enviarAudioAlBackend,
-    siguiente,
+    siguienteElemento,
     snackbar,
     setSnackbar,
     audioUri,
   } = useLecturaGuiadaActividad({
-    elementos: LETRAS,
+    elementos: ORACIONES,
     tipoAudio: TIPO_DE_AUDIO_GRABACION_EXPO,
     endpointBackend: `http://${IP_PC}:${PUERTO}/audio`,
-    compararTexto: (reconocido, esperado) => reconocido.replace(/[^a-zA-Z]/g, '').toLowerCase() === esperado.toLowerCase()
+    compararTexto: (reconocido, esperado) =>
+      reconocido.replace(/[.,;:!?¿¡"]/g, '').trim().toLowerCase() ===
+      esperado.replace(/[.,;:!?¿¡"]/g, '').trim().toLowerCase(),
+    onErrorConexion: setErrorConexion,
   });
 
   const listoParaGrabar = !enviando && !grabando && !cargando && !audioUri;
 
   function reproducirAudio() {
-    Speech.speak(elementoActual.texto, { language: 'es-ES', rate: 0.8, pitch: 1.1 });
+    Speech.speak(elementoActual.texto, { language: 'es-ES', rate: 0.9, pitch: 1.1 });
   }
 
   async function handleComenzarGrabacion() {
@@ -58,7 +66,7 @@ export default function LecturaGuiadaLetra() {
 
   return (
     <LecturaGuiadaActividadView
-      titulo="🔤 Repetí la letra"
+      titulo="📝 Repetí la oración"
       elementoActual={elementoActual}
       grabando={grabando}
       cargando={cargando}
@@ -66,17 +74,18 @@ export default function LecturaGuiadaLetra() {
       comenzarGrabacion={handleComenzarGrabacion}
       detenerGrabacion={handleDetenerGrabacion}
       enviarAudioAlBackend={enviarAudioAlBackend}
-      siguiente={siguiente}
+      siguienteElemento={siguienteElemento}
       snackbar={snackbar}
       setSnackbar={setSnackbar}
       reproducirAudio={reproducirAudio}
       mostrarPopup={mostrarPopup}
       setMostrarPopup={setMostrarPopup}
       listoParaGrabar={listoParaGrabar}
-      backgroundImage={require('../assets/images/actividad-lectura-guiada-palabra.jpg')}
-      colorTexto="#1976D2"
-      colorBoton="#7dacf1ff"
-      colorFondoCaja="#E3F2FD"
+      backgroundImage={require('../assets/images/actividad-lectura-guiada-oracion.jpg')}
+      colorTexto="#fdfdfdff"
+      colorBoton="#093577ff"
+      colorFondoCaja="#6da2c9ff"
     />
   );
-}*/
+}
+*/

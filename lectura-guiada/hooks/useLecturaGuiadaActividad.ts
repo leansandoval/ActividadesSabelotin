@@ -5,7 +5,7 @@ const ACTIVAR_FLAG_ENVIO = true;
 const DESACTIVAR_FLAG_ENVIO = false;
 const MENSAJE_SNACKBAR_EXITOSO = true;
 const MENSAJE_SNACKBAR_FALLIDO = false;
-const TIMEOUT_SIN_CONEXION = 10000; // 10 segundos
+const TIMEOUT_SIN_CONEXION = 20000; // 20 segundos
 const TIMEOUT_MOSTRAR_SNACKBAR = 2200; // 2.2 segundos
 const TIMEOUT_DELAY_SINCRONIZACION = 200; // 0.2 segundos
 

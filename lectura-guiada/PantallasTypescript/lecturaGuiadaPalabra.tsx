@@ -1,25 +1,24 @@
-import { useLecturaGuiadaActividad } from '../hooks/useLecturaGuiadaActividad';
-import { LecturaGuiadaActividadView } from '../components/LecturaGuiadaActividadView';
+/*import { useLecturaGuiadaActividad } from '../../hooks/useLecturaGuiadaActividad';
+import { LecturaGuiadaActividadView } from '../../components/LecturaGuiadaActividadView';
 import * as Speech from 'expo-speech';
 import Constants from 'expo-constants';
 import React, { useState } from 'react';
 
-const ORACIONES = [
-  { texto: 'El perro duerme' },
-  { texto: 'La luna brilla en el cielo' },
-  { texto: 'Me gusta leer libros' },
-  { texto: 'La flor es roja' },
-  { texto: 'Hoy hace mucho calor' },
-  { texto: 'El gato juega con la pelota' },
-  { texto: 'La casa es grande' },
-  { texto: 'El sol sale por la mañana' },
-  { texto: 'La maestra escribe en el pizarrón' },
-  { texto: 'Voy al parque con mis amigos' },
+const PALABRAS = [
+  { texto: 'Burro', emoji: '🐴' },
+  { texto: 'Casa', emoji: '🏠' },
+  { texto: 'Flor', emoji: '🌸' },
+  { texto: 'Gato', emoji: '🐱' },
+  { texto: 'Libro', emoji: '📚' },
+  { texto: 'Luna', emoji: '🌙' },
+  { texto: 'Mano', emoji: '🖐️' },
+  { texto: 'Perro', emoji: '🐶' },
+  { texto: 'Sol', emoji: '☀️' },
 ];
 const TIPO_DE_AUDIO_GRABACION_EXPO = 'audio/x-m4a';
 const { IP_PC, IP_ANDROID_STUDIO, PUERTO } = Constants.expoConfig?.extra || {};
 
-export default function LecturaGuiadaOracion() {
+export default function LecturaGuiadaPalabra() {
   const [errorConexion, setErrorConexion] = useState(false);
   const [mostrarPopup, setMostrarPopup] = useState(false);
   const {
@@ -35,23 +34,22 @@ export default function LecturaGuiadaOracion() {
     setSnackbar,
     audioUri,
   } = useLecturaGuiadaActividad({
-    elementos: ORACIONES,
+    elementos: PALABRAS,
     tipoAudio: TIPO_DE_AUDIO_GRABACION_EXPO,
     endpointBackend: `http://${IP_PC}:${PUERTO}/audio`,
-    compararTexto: (reconocido, esperado) =>
-      reconocido.replace(/[.,;:!?¿¡"]/g, '').trim().toLowerCase() ===
-      esperado.replace(/[.,;:!?¿¡"]/g, '').trim().toLowerCase(),
     onErrorConexion: setErrorConexion,
   });
 
   const listoParaGrabar = !enviando && !grabando && !cargando && !audioUri;
 
   function reproducirAudio() {
-    Speech.speak(elementoActual.texto, { language: 'es-ES', rate: 0.9, pitch: 1.1 });
+    Speech.speak(elementoActual.texto, { language: 'es-ES', rate: 0.8, pitch: 1.1 });
   }
 
   async function handleComenzarGrabacion() {
-    if (!listoParaGrabar) return;
+    if (!listoParaGrabar) {
+      return;
+    }
     setMostrarPopup(true);
     await comenzarGrabacion();
   }
@@ -66,7 +64,7 @@ export default function LecturaGuiadaOracion() {
 
   return (
     <LecturaGuiadaActividadView
-      titulo="📝 Repetí la oración"
+      titulo="📝 Repetí la palabra"
       elementoActual={elementoActual}
       grabando={grabando}
       cargando={cargando}
@@ -81,10 +79,11 @@ export default function LecturaGuiadaOracion() {
       mostrarPopup={mostrarPopup}
       setMostrarPopup={setMostrarPopup}
       listoParaGrabar={listoParaGrabar}
-      backgroundImage={require('../assets/images/actividad-lectura-guiada-oracion.jpg')}
-      colorTexto="#fdfdfdff"
-      colorBoton="#093577ff"
-      colorFondoCaja="#6da2c9ff"
+      backgroundImage={require('../assets/images/actividad-lectura-guiada-palabra.jpg')}
+      colorTexto='#F57C00'
+      colorBoton='#FFD966'
+      colorFondoCaja='#FFF9C4'
+      errorConexion={errorConexion}
     />
   );
-}
+}*/
